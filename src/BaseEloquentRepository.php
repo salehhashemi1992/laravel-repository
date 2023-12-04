@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,11 +16,18 @@ abstract class BaseEloquentRepository implements RepositoryInterface
      */
     protected array $criteria = [];
 
-    protected array $relations = [];
+    private array $relations = [];
 
     protected array $orderByFields = [];
 
-    protected string $modelClass;
+    private Builder $query;
+
+    private Model $model;
+
+    /**
+     * This function returns the fully qualified class name of the model that the repository is responsible for.
+     */
+    abstract protected function getModelClass(): string;
 
     /**
      * {@inheritDoc}
@@ -217,6 +225,73 @@ abstract class BaseEloquentRepository implements RepositoryInterface
         }
     }
 
+    /**
+     * It takes an array of fields, and returns an array of fields, but with each field aliased
+     */
+    protected function aliasFields(array $fields): array
+    {
+        return array_map(function ($field) {
+            if (is_numeric($field)) {
+                return $field;
+            }
+
+            return $this->aliasField($field);
+        }, $fields);
+    }
+
+    /**
+     * Alias a field with the table's current alias.
+     */
+    protected function aliasField(string $field): string
+    {
+        if (str_contains($field, '.')) {
+            return $field;
+        }
+
+        return $this->getTableName().'.'.$field;
+    }
+
+    /**
+     * Get the model instance associated with the repository.
+     */
+    protected function getModel(): Model
+    {
+        if (! isset($this->model)) {
+            $className = $this->getModelClass();
+            $this->model = new $className();
+        }
+
+        return $this->model;
+    }
+
+    /**
+     * Return Model's Table Name
+     */
+    protected function getTableName(): string
+    {
+        return $this->getModel()->getTable();
+    }
+
+    /**
+     * Set the query builder instance for the repository.
+     */
+    protected function setQuery(Builder $query): void
+    {
+        $this->query = $query;
+    }
+
+    /**
+     * Get the query builder instance for the repository.
+     */
+    protected function getQuery(): Builder
+    {
+        if (! isset($this->query)) {
+            $this->query = $this->getModel()->newQuery();
+        }
+
+        return $this->query;
+    }
+
     protected function resetQuery(): void
     {
         unset($this->query);
@@ -226,7 +301,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * This function returns the name of the field that will be used to display the record in the list view.
      */
     protected function getDisplayField(): string
     {
