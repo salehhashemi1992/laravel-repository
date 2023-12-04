@@ -24,6 +24,13 @@ abstract class BaseEloquentRepository implements RepositoryInterface
 
     private Model $model;
 
+    private int $perPage;
+
+    public function __construct()
+    {
+        $this->perPage = config('perPage');
+    }
+
     /**
      * This function returns the fully qualified class name of the model that the repository is responsible for.
      */
@@ -120,8 +127,10 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function paginate(int $perPage = 10): Paginator
+    public function paginate(int $perPage = null): Paginator
     {
+        $this->perPage = $perPage ?? $this->perPage;
+
         $this->applyCriteria();
         $this->applyRelations();
         $this->applyOrderBy();
