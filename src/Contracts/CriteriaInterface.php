@@ -2,14 +2,13 @@
 
 namespace Salehhashemi\Repository\Contracts;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 interface CriteriaInterface
 {
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model Model
-     * @param  \Illuminate\Database\Eloquent\Builder  $query Query
+     * Apply the criteria to the given Eloquent query builder.
      */
     public function apply(Model $model, Builder $query): Builder;
 }
