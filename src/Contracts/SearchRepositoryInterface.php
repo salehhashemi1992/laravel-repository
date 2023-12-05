@@ -7,9 +7,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 interface SearchRepositoryInterface
 {
     /**
-     * @param  array  $queryParams Request params
-     * @param  array  $options The settings/configuration used for pagination.
-     * @return \Illuminate\Contracts\Pagination\Paginator;
+     * Search for records based on the provided query parameters and paginate the results.
      */
-    public function search(array $queryParams, array $options = []): Paginator;
+    public function search(array $queryParams, int $perPage = null): Paginator;
 }
