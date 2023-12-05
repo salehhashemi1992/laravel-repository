@@ -2,8 +2,8 @@
 
 namespace Salehhashemi\Repository\Traits;
 
-use App\Filters\BaseFilter;
 use Illuminate\Contracts\Pagination\Paginator;
+use Salehhashemi\Repository\BaseFilter;
 
 trait SearchableTrait
 {
