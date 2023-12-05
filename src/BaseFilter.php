@@ -1,5 +1,7 @@
 <?php
 
+namespace Salehhashemi\Repository;
+
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 
