@@ -4,10 +4,10 @@ namespace Salehhashemi\Repository;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Collection as GeneralCollection;
+use Illuminate\Support\Collection;
 use Salehhashemi\Repository\Contracts\CriteriaInterface;
 use Salehhashemi\Repository\Contracts\RepositoryInterface;
 
@@ -39,6 +39,14 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     abstract protected function getModelClass(): string;
 
     /**
+     * This function returns the name of the field that will be used to display the record in the list view.
+     */
+    protected function getDisplayField(): string
+    {
+        return 'id';
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function findOne(int|string $primaryKey = null): ?Model
@@ -49,7 +57,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
 
         $this->applyCriteria();
         $this->applyRelations();
-        $this->applyOrderBy();
+        $this->applyOrder();
         $result = $this->getQuery()->first();
         $this->resetQuery();
 
@@ -80,7 +88,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function findAll(array $options = []): Collection
+    public function findAll(array $options = []): EloquentCollection
     {
         $options += [
             'limit' => null,
@@ -97,7 +105,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
 
         $this->applyCriteria();
         $this->applyRelations();
-        $this->applyOrderBy();
+        $this->applyOrder();
         $results = $this->getQuery()->get();
         $this->resetQuery();
 
@@ -107,11 +115,11 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function findList(string $key = null, string $value = null): GeneralCollection
+    public function findList(string $key = null, string $value = null): Collection
     {
         $this->applyCriteria();
         $this->applyRelations();
-        $this->applyOrderBy();
+        $this->applyOrder();
 
         $key = $key ?? $this->getModel()->getKeyName();
         $value = $value ?? $this->getDisplayField();
@@ -135,18 +143,17 @@ abstract class BaseEloquentRepository implements RepositoryInterface
 
         $this->applyCriteria();
         $this->applyRelations();
-        $this->applyOrderBy();
-        $results = $this->getQuery()->paginate($perPage);
+        $this->applyOrder();
+        $results = $this->getQuery()->paginate($this->perPage);
         $this->resetQuery();
 
         return $results;
     }
 
     /**
-     * @param  array  $conditions Conditions
-     * @return $this
+     * Apply conditions to the query based on an array of conditions.
      */
-    protected function applyConditions(array $conditions): self
+    protected function applyConditions(array $conditions): static
     {
         $conditions = array_combine($this->aliasFields(array_keys($conditions)), $conditions);
         $this->getQuery()->where($conditions);
@@ -157,7 +164,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function addCriteria(CriteriaInterface $criteria): self
+    public function addCriteria(CriteriaInterface $criteria): static
     {
         $this->criteria[] = $criteria;
 
@@ -165,9 +172,9 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     }
 
     /**
-     * @return $this
+     * Apply criteria to the query based on registered criteria objects.
      */
-    protected function applyCriteria(): self
+    protected function applyCriteria(): static
     {
         foreach ($this->criteria as $criteria) {
             $criteria->apply($this->getModel(), $this->getQuery());
@@ -179,14 +186,17 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function orderBy(string $field, string $direction = 'ASC'): self
+    public function orderBy(string $field, string $direction = 'ASC'): static
     {
         $this->orderByFields[$this->aliasField($field)] = $direction;
 
         return $this;
     }
 
-    protected function applyOrderBy(): void
+    /**
+     * Apply ordering to the query based on specified fields and directions.
+     */
+    protected function applyOrder(): static
     {
         $fields = $this->orderByFields;
         if (! $fields) {
@@ -196,13 +206,14 @@ abstract class BaseEloquentRepository implements RepositoryInterface
         foreach ($fields as $field => $direction) {
             $this->getQuery()->orderBy($field, $direction);
         }
+
+        return $this;
     }
 
     /**
-     * @param  array  $relations Relations
-     * @return $this
+     * Add relations to be eager-loaded when querying.
      */
-    protected function with(array $relations): self
+    protected function with(array $relations): static
     {
         $this->relations = array_merge($this->relations, $relations);
 
@@ -212,7 +223,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function lockForUpdate(): self
+    public function lockForUpdate(): static
     {
         $this->getQuery()->lockForUpdate();
 
@@ -222,18 +233,23 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function sharedLock(): self
+    public function sharedLock(): static
     {
         $this->getQuery()->sharedLock();
 
         return $this;
     }
 
-    protected function applyRelations(): void
+    /**
+     * Apply eager-loading relations to the query.
+     */
+    protected function applyRelations(): static
     {
         if ($this->relations) {
             $this->getQuery()->with($this->relations);
         }
+
+        return $this;
     }
 
     /**
@@ -303,19 +319,14 @@ abstract class BaseEloquentRepository implements RepositoryInterface
         return $this->query;
     }
 
+    /**
+     * Reset the query builder and related properties.
+     */
     protected function resetQuery(): void
     {
         unset($this->query);
         $this->criteria = [];
         $this->relations = [];
         $this->orderByFields = [];
-    }
-
-    /**
-     * This function returns the name of the field that will be used to display the record in the list view.
-     */
-    protected function getDisplayField(): string
-    {
-        return 'id';
     }
 }
