@@ -38,6 +38,7 @@ abstract class BaseFilter
             $this::WILD_BEFORE => '%'.$value,
             $this::WILD_AFTER => $value.'%',
             $this::WILD_BOTH => '%'.$value.'%',
+            default => $value,
         };
 
         $this->getQuery()->where($field, 'like', $matchText);

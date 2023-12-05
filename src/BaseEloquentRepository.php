@@ -78,8 +78,8 @@ abstract class BaseEloquentRepository implements RepositoryInterface
 
         if ($result === null) {
             throw (new ModelNotFoundException())->setModel(
-                get_debug_type($this->model),
-                $primaryKey
+                $this->model::class,
+                $primaryKey ?? ''
             );
         }
 
@@ -299,8 +299,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     protected function getModel(): Model
     {
         if (! isset($this->model)) {
-            $className = $this->getModelClass();
-            $this->model = new $className();
+            $this->model = app($this->getModelClass());
         }
 
         return $this->model;

@@ -1,8 +1,11 @@
 includes:
     - phpstan-baseline.neon
+    - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
-    level: 6
+    level: 8
     paths:
         - src
         - config
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

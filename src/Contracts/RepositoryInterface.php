@@ -24,6 +24,8 @@ interface RepositoryInterface
 
     /**
      * It takes an array of options, applies them to the query, executes the query, and returns the results.
+     *
+     * @param  array<string, int|null>  $options
      */
     public function findAll(array $options = []): EloquentCollection;
 
