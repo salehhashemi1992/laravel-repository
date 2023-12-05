@@ -5,19 +5,20 @@ namespace Salehhashemi\Repository\Traits;
 use Illuminate\Contracts\Pagination\Paginator;
 use Salehhashemi\Repository\BaseFilter;
 
+/**
+ * @mixin \Salehhashemi\Repository\BaseEloquentRepository
+ */
 trait SearchableTrait
 {
     abstract protected function getFilterManager(): BaseFilter;
 
     /**
-     * @param  int  $perPage Rows Per Page
+     * {@inheritDoc}
      */
-    abstract public function paginate(int $perPage = 10): Paginator;
-
-    public function search(array $queryParams, array $options = []): Paginator
+    public function search(array $queryParams, int $perPage = null): Paginator
     {
         $this->setQuery($this->getFilterManager()->applyFilter($queryParams));
 
-        return $this->paginate();
+        return $this->paginate($perPage);
     }
 }
