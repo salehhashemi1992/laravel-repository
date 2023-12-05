@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 use Salehhashemi\Repository\Contracts\CriteriaInterface;
 use Salehhashemi\Repository\Contracts\RepositoryInterface;
 
@@ -139,15 +140,29 @@ abstract class BaseEloquentRepository implements RepositoryInterface
      */
     public function paginate(int $perPage = null): Paginator
     {
-        $this->perPage = $perPage ?? $this->perPage;
+        $perPage = $this->preparePageSize($perPage);
 
         $this->applyCriteria();
         $this->applyRelations();
         $this->applyOrder();
-        $results = $this->getQuery()->paginate($this->perPage);
+        $results = $this->getQuery()->paginate($perPage);
         $this->resetQuery();
 
         return $results;
+    }
+
+    /**
+     * Prepare the page size for pagination.
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function preparePageSize(int $perPage = null): int
+    {
+        if ($perPage <= 0) {
+            throw new InvalidArgumentException('Invalid page size');
+        }
+
+        return min($perPage, $this->perPage);
     }
 
     /**
