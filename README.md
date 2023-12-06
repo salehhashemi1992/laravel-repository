@@ -31,7 +31,7 @@ After publishing, make sure to clear the config cache to apply your changes:
 ```bash
 php artisan config:clear
 ```
-Then, you can adjust the pagination limit in the `config/otp.php`
+Then, you can adjust the pagination limit in the `config/repository.php`
 
 ### Exceptions
 * `\InvalidArgumentException` Thrown if page size is invalid.
