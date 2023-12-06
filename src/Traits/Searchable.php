@@ -8,7 +8,7 @@ use Salehhashemi\Repository\BaseFilter;
 /**
  * @mixin \Salehhashemi\Repository\BaseEloquentRepository
  */
-trait SearchableTrait
+trait Searchable
 {
     abstract protected function getFilterManager(): BaseFilter;
 
