@@ -12,9 +12,6 @@ trait SearchableTrait
 {
     abstract protected function getFilterManager(): BaseFilter;
 
-    /**
-     * {@inheritDoc}
-     */
     public function search(array $queryParams, int $perPage = null): Paginator
     {
         $this->setQuery($this->getFilterManager()->applyFilter($queryParams));
