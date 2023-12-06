@@ -4,7 +4,7 @@ namespace Salehhashemi\Repository\Contracts;
 
 use Illuminate\Contracts\Pagination\Paginator;
 
-interface SearchRepositoryInterface
+interface SearchableRepositoryInterface
 {
     /**
      * Search for records based on the provided query parameters and paginate the results.
