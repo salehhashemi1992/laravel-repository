@@ -22,11 +22,22 @@ abstract class BaseFilter
      */
     protected const WILD_BOTH = 2;
 
-    protected Model $model;
+    private Model $model;
 
     protected QueryBuilder $builder;
 
+    abstract protected function getModelClass(): string;
+
     abstract public function applyFilter(array $queryParams): QueryBuilder;
+
+    protected function getModel(): Model
+    {
+        if (! isset($this->model)) {
+            $this->model = app($this->getModelClass());
+        }
+
+        return $this->model;
+    }
 
     protected function whereLike(string $field, string $value, int $type): self
     {
@@ -82,7 +93,7 @@ abstract class BaseFilter
     protected function getQuery(): QueryBuilder
     {
         if (! isset($this->builder)) {
-            $this->builder = $this->model->query();
+            $this->builder = $this->getModel()->newQuery();
         }
 
         return $this->builder;
