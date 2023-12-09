@@ -156,21 +156,10 @@ namespace App\Filters;
 
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Database\Eloquent\Model;
 use Salehhashemi\Repository\BaseFilter;
 
 class PostFilter extends BaseFilter
 {
-    /**
-     * @var \App\Models\Post
-     */
-    protected Model $model;
-
-    public function __construct(Post $post)
-    {
-        $this->model = $post;
-    }
-    
     public function applyFilter(array $queryParams): QueryBuilder
     {
         $this
@@ -186,6 +175,11 @@ class PostFilter extends BaseFilter
         }
 
         return $this->getQuery();
+    }
+    
+    protected function getModelClass(): string
+    {
+        return Post::class;
     }
 }
 ```
@@ -216,7 +210,46 @@ class FeaturedPostCriteria implements CriteriaInterface
     }
 }
 ```
-### Repository Usage in controller
+
+## Binding Interface to Implementation
+It is crucial to bind the repository interface to its concrete implementation. This enables Laravel service container to automatically resolve and inject the appropriate repository instance wherever it's needed.
+
+1. **Create a Service Provider**
+    ```php
+    php artisan make:provider RepositoryServiceProvider
+    ```
+2. **Bind in the Service Provider**
+    ```php
+    <?php
+    
+    namespace App\Providers;
+    
+    use Illuminate\Support\ServiceProvider;
+    use App\Repositories\PostRepositoryInterface;
+    use App\Repositories\PostRepository;
+    
+    class RepositoryServiceProvider extends ServiceProvider
+    {
+        public function register()
+        {
+            $this->app->bind(
+                PostRepositoryInterface::class,
+                PostRepository::class
+            );
+        }
+    }    
+    ```
+
+3. **Register the Service Provider:** Add your `RepositoryServiceProvider` to the providers array in `config/app.php`.
+    ```php
+    'providers' => [
+        // Other Service Providers
+    
+        App\Providers\RepositoryServiceProvider::class,
+    ],
+    ```
+
+## Repository Usage in controller
 This example shows how to use the `PostRepository` within a controller, integrating it seamlessly into a Laravel application workflow.
 
 ```php
