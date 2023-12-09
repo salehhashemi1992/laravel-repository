@@ -31,7 +31,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
 
     public function __construct()
     {
-        $this->perPage = config('perPage');
+        $this->perPage = config('repository.perPage');
     }
 
     /**
