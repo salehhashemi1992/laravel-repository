@@ -50,7 +50,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function findOne(int|string $primaryKey = null): ?Model
+    public function findOne(int|string|null $primaryKey = null): ?Model
     {
         if (func_num_args() > 0) {
             $this->applyConditions(['id' => $primaryKey]);
@@ -68,7 +68,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function findOneOrFail(int|string $primaryKey = null): Model
+    public function findOneOrFail(int|string|null $primaryKey = null): Model
     {
         if (func_num_args() > 0) {
             $this->applyConditions(['id' => $primaryKey]);
@@ -116,7 +116,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function findList(string $key = null, string $value = null): Collection
+    public function findList(?string $key = null, ?string $value = null): Collection
     {
         $this->applyCriteria();
         $this->applyRelations();
@@ -138,7 +138,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function paginate(int $perPage = null): Paginator
+    public function paginate(?int $perPage = null): Paginator
     {
         $perPage = $this->preparePageSize($perPage);
 
@@ -156,7 +156,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
      *
      * @throws \InvalidArgumentException
      */
-    protected function preparePageSize(int $perPage = null): int
+    protected function preparePageSize(?int $perPage = null): int
     {
         if ($perPage <= 0) {
             throw new InvalidArgumentException('Invalid page size');
