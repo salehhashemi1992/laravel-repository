@@ -12,7 +12,7 @@ trait Searchable
 {
     abstract protected function getFilterManager(): BaseFilter;
 
-    public function search(array $queryParams, int $perPage = null): Paginator
+    public function search(array $queryParams, ?int $perPage = null): Paginator
     {
         $this->setQuery($this->getFilterManager()->applyFilter($queryParams));
 

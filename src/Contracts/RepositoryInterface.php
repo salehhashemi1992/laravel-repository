@@ -13,14 +13,14 @@ interface RepositoryInterface
      * It applies the conditions, criteria, relations, and order by to the query,
      * then gets the first result and resets the query
      */
-    public function findOne(int|string $primaryKey = null): ?Model;
+    public function findOne(int|string|null $primaryKey = null): ?Model;
 
     /**
      * If the result of the `findOne` function is null, throw a `ModelNotFoundException`
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function findOneOrFail(int|string $primaryKey = null): Model;
+    public function findOneOrFail(int|string|null $primaryKey = null): Model;
 
     /**
      * It takes an array of options, applies them to the query, executes the query, and returns the results.
@@ -36,12 +36,12 @@ interface RepositoryInterface
      * @param  string|null  $value The field to use as the value of the select list.
      * @return \Illuminate\Support\Collection A collection of key value pairs.
      */
-    public function findList(string $key = null, string $value = null): Collection;
+    public function findList(?string $key = null, ?string $value = null): Collection;
 
     /**
      * It applies the criteria, relations, and order by to the query, then paginates the results and resets the query
      */
-    public function paginate(int $perPage = null): Paginator;
+    public function paginate(?int $perPage = null): Paginator;
 
     /**
      * Add a criteria to the query.
