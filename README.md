@@ -191,7 +191,7 @@ The `FeaturedPostCriteria` is an example of defining criteria for filtering, her
 
 namespace App\Repositories\Criteria;
 
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Salehhashemi\Repository\Contracts\CriteriaInterface;
 

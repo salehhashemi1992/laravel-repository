@@ -2,7 +2,7 @@
 
 namespace Salehhashemi\Repository\Contracts;
 
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 interface CriteriaInterface
