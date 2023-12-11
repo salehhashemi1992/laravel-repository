@@ -2,6 +2,16 @@
 
 All notable changes will be documented in this file.
 
+## v0.3.2
+- Nullable type declaration by @salehhashemi1992 in #9
+
+## v0.3.1
+- Change builder to eloquent builder in criteria interface by @salehhashemi1992 in #10
+
+## v0.3.0
+- refactor the basefilter by @salehhashemi1992 in #7
+- Enhance the readme file by @salehhashemi1992 in #8
+
 ## v0.2.1
 - change searchable trait and interface name by @salehhashemi1992 in #4
 -  Update readme with practical sample and available methods by @salehhashemi1992 in #5
