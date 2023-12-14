@@ -11,6 +11,8 @@
 
 This Laravel package abstracts the database layer using repository pattern with enhanced capabilities for filtering and searching. It simplifies the common tasks of data manipulation, along with advanced features for applying custom filters and search criteria.
 
+![Header Image](./assets/header.png)
+
 ## Features
 * Repository Abstraction
 * Dynamic Filtering
