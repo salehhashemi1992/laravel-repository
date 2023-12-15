@@ -59,7 +59,7 @@ class PostRepository extends BaseEloquentRepository implements PostRepositoryInt
 
     protected function getFilterManager(): PostFilter
     {
-        $filterManager = new PostFilter($this->getModel());
+        $filterManager = new PostFilter();
         $filterManager->setQuery($this->getQuery());
 
         return $filterManager;
