@@ -5,6 +5,8 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/salehhashemi/laravel-repository.svg?style=flat-square)](https://packagist.org/packages/salehhashemi/laravel-repository)
 [![Total Downloads](https://img.shields.io/packagist/dt/salehhashemi/laravel-repository.svg?style=flat-square)](https://packagist.org/packages/salehhashemi/laravel-repository)
 [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/salehhashemi1992/laravel-repository/static-analysis.yml?branch=main&label=static-analysis)](https://github.com/salehhashemi1992/laravel-repository/actions/workflows/static-analysis.yml)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/salehhashemi1992/laravel-repository/run-tests.yml?branch=main&label=run-tests)](https://github.com/salehhashemi1992/laravel-repository/actions/workflows/run-tests.yml)
+[![codecov](https://codecov.io/gh/salehhashemi1992/laravel-repository/graph/badge.svg?token=niiiz6l2tJ)](https://codecov.io/gh/salehhashemi1992/laravel-repository)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%208-brightgreen.svg?style=flat)](https://phpstan.org/)
 
 </div>
