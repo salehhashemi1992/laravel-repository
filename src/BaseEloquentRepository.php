@@ -27,13 +27,6 @@ abstract class BaseEloquentRepository implements RepositoryInterface
 
     private Model $model;
 
-    private int $perPage;
-
-    public function __construct()
-    {
-        $this->perPage = config('repository.perPage');
-    }
-
     /**
      * This function returns the fully qualified class name of the model that the repository is responsible for.
      */
@@ -162,7 +155,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
             throw new InvalidArgumentException('Invalid page size');
         }
 
-        return min($perPage, $this->perPage);
+        return min($perPage, config('repository.perPage'));
     }
 
     /**
