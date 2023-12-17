@@ -11,5 +11,5 @@ return [
     | Adjust this value to set the default and maximum items displayed per page.
     |
     */
-    'perPage' => 20,
+    'perPage' => env('REPOSITORY_PAGE_SIZE', 20),
 ];
