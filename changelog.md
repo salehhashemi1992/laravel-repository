@@ -2,6 +2,12 @@
 
 All notable changes will be documented in this file.
 
+## v0.3.5
+- initial test structure and supports by @salehhashemi1992 in #11
+- New badges in readme by @salehhashemi1992 in #12
+- set default repository page size with environment variable by @imahmood in #13
+- remove perPage init from constructor by @imahmood in #14
+
 ## v0.3.2
 - Nullable type declaration by @salehhashemi1992 in #9
 
