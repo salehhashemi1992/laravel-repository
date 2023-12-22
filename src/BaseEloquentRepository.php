@@ -151,11 +151,17 @@ abstract class BaseEloquentRepository implements RepositoryInterface
      */
     protected function preparePageSize(?int $perPage = null): int
     {
+        $defaultPerPage = config('repository.perPage');
+
+        if ($perPage === null) {
+            return $defaultPerPage;
+        }
+
         if ($perPage <= 0) {
             throw new InvalidArgumentException('Invalid page size');
         }
 
-        return min($perPage, config('repository.perPage'));
+        return min($perPage, $defaultPerPage);
     }
 
     /**
