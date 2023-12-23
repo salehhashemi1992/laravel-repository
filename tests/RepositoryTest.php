@@ -116,10 +116,14 @@ class RepositoryTest extends BaseTest
         $list = $postRepo->findList();
 
         $this->assertCount(3, $list);
-        foreach ($list as $key => $value) {
-            $this->assertIsNumeric($key); // Default key is 'id'
-            $this->assertIsNumeric($value); // Default value is from 'getDisplayField'
-        }
+
+        $expected = [
+            '3' => 3,
+            '2' => 2,
+            '1' => 1,
+        ];
+
+        $this->assertSame($expected, $list->toArray());
     }
 
     public function testFindListWithCustomKeyValuePairs()
