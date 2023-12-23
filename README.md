@@ -67,7 +67,7 @@ class PostRepository extends BaseEloquentRepository implements PostRepositoryInt
         return $filterManager;
     }
 
-    public function findAllFeatured(array $queryParams): EloquentCollection
+    public function findAllFeatured(): EloquentCollection
     {
         $this->addCriteria(new FeaturedPostCriteria());
 
@@ -132,7 +132,7 @@ use Salehhashemi\Repository\Contracts\SearchableRepositoryInterface;
  */
 interface PostRepositoryInterface extends RepositoryInterface, SearchableRepositoryInterface
 {
-    public function findAllFeatured(array $queryParams): EloquentCollection;
+    public function findAllFeatured(): EloquentCollection;
 
     public function searchVisible(array $queryParams, int $perPage): Paginator;
 
