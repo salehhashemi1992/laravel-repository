@@ -2,6 +2,10 @@
 
 All notable changes will be documented in this file.
 
+## v0.4.0
+- fix preparePageSize method by @salehhashemi1992 in #15
+- Implement tests for the whole flow by @salehhashemi1992 in #16
+
 ## v0.3.5
 - initial test structure and supports by @salehhashemi1992 in #11
 - New badges in readme by @salehhashemi1992 in #12
