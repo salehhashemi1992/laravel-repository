@@ -14,6 +14,8 @@ use Salehhashemi\Repository\Tests\TestSupport\database\factories\CommentFactory;
  * @property string $content
  * @property int $post_id
  * @property \Salehhashemi\Repository\Tests\TestSupport\Models\Post $post
+ *
+ * @method static CommentFactory factory($count = null, $state = [])
  */
 class Comment extends Model
 {

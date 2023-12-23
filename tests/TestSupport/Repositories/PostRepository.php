@@ -27,7 +27,7 @@ class PostRepository extends BaseEloquentRepository implements PostRepositoryInt
         return $filterManager;
     }
 
-    public function findAllFeatured(array $queryParams): EloquentCollection
+    public function findAllFeatured(): EloquentCollection
     {
         $this->addCriteria(new FeaturedPostCriteria());
 
@@ -36,7 +36,7 @@ class PostRepository extends BaseEloquentRepository implements PostRepositoryInt
 
     public function searchVisible(array $queryParams, int $perPage): Paginator
     {
-        $this->orderBy('sort');
+        $this->orderBy('id');
         $this->withCategories();
 
         return $this->search($queryParams, $perPage);

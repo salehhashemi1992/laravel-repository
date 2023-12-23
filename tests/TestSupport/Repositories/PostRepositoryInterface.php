@@ -14,7 +14,7 @@ use Salehhashemi\Repository\Tests\TestSupport\Models\Post;
  */
 interface PostRepositoryInterface extends RepositoryInterface, SearchableRepositoryInterface
 {
-    public function findAllFeatured(array $queryParams): EloquentCollection;
+    public function findAllFeatured(): EloquentCollection;
 
     public function searchVisible(array $queryParams, int $perPage): Paginator;
 

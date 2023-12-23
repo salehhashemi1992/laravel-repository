@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('status')->default('draft');
             $table->boolean('is_published')->default(false);
+            $table->boolean('is_featured')->default(false);
 
             $table->timestamps();
         });
