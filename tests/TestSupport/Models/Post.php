@@ -14,18 +14,20 @@ use Salehhashemi\Repository\Tests\TestSupport\database\factories\PostFactory;
  * @property string $content
  * @property string $status
  * @property bool $is_published
+ * @property bool $is_featured
  * @property \Illuminate\Database\Eloquent\Collection|\Salehhashemi\Repository\Tests\TestSupport\Models\Comment[] $comments
  * @property \Illuminate\Database\Eloquent\Collection| \Salehhashemi\Repository\Tests\TestSupport\Models\Category[] $categories
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post query()
+ * @method static PostFactory factory($count = null, $state = [])
  */
 class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'status', 'is_published'];
+    protected $fillable = ['title', 'content', 'status', 'is_published', 'is_featured'];
 
     /**
      * {@inheritDoc}

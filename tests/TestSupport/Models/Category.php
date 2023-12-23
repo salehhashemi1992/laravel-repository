@@ -11,6 +11,8 @@ use Salehhashemi\Repository\Tests\TestSupport\database\factories\CategoryFactory
  * @property int $id
  * @property string $name
  * @property \Illuminate\Database\Eloquent\Collection|\Salehhashemi\Repository\Tests\TestSupport\Models\Post[] $posts
+ *
+ * @method static CategoryFactory factory($count = null, $state = [])
  */
 class Category extends Model
 {
