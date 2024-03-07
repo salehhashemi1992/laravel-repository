@@ -3,6 +3,7 @@
 namespace Salehhashemi\Repository;
 
 use Illuminate\Support\ServiceProvider;
+use Salehhashemi\Repository\Commands\MakeRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,12 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/repository.php' => config_path('repository.php'),
         ], 'config');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                MakeRepository::class,
+            ]);
+        }
     }
 
     /**

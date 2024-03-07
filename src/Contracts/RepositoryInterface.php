@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 interface RepositoryInterface
 {
     /**
-     * It applies the conditions, criteria, relations, and order by to the query,
+     * It applies the conditions, criteria, relations, and orders by to the query,
      * then gets the first result and resets the query
      */
     public function findOne(int|string|null $primaryKey = null): ?Model;
@@ -32,8 +32,8 @@ interface RepositoryInterface
     /**
      * It returns a collection of key-value pairs from the database.
      *
-     * @param  string|null  $key The key to use for the list.
-     * @param  string|null  $value The field to use as the value of the select list.
+     * @param  string|null  $key  The key to use for the list.
+     * @param  string|null  $value  The field to use as the value of the select list.
      * @return \Illuminate\Support\Collection A collection of key value pairs.
      */
     public function findList(?string $key = null, ?string $value = null): Collection;
