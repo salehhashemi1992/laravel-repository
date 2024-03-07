@@ -1,0 +1,39 @@
+<?php
+declare(strict_types=1);
+
+namespace {{namespace}}\Filters;
+
+use Salehhashemi\Repository\BaseFilter;
+use Illuminate\Database\Eloquent\Builder;
+use {{modelNamespace}}\{{modelName}};
+
+class {{name}}Filter extends BaseFilter
+{
+    /**
+     * Apply filters to the query builder based on a set of parameters.
+     */
+    public function applyFilters(array $filters): Builder
+    {
+        $this
+            ->whereLike('title', $queryParams['title'] ?? '', self::WILD_BOTH)
+            ->whereValue('status', $queryParams['status'] ?? '')
+            ->compare('created_at', '>=', $queryParams['created_from'] ?? '')
+            ->compare('created_at', '<=', $queryParams['created_to'] ?? '');
+
+        if (! empty($queryParams['category_id'])) {
+            $this->getQuery()->whereHas('categories', function ($query) use ($queryParams) {
+                $query->where('categories.id', $queryParams['category_id']);
+            });
+        }
+
+        return $this->getQuery();
+    }
+
+  /**
+     * The Eloquent model class that this filter applies to.
+     */
+    protected function getModelClass(): string
+    {
+        return {{modelName}}::class;
+    }
+}

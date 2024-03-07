@@ -1,0 +1,34 @@
+<?php
+declare(strict_types=1);
+
+namespace {{namespace}};
+
+use {{namespace}}\Contracts\{{name}}RepositoryInterface;
+use Salehhashemi\Repository\Eloquent\BaseRepository;
+use {{modelNamespace}}\{{modelName}};
+use {{namespace}}\Filters\{{name}}Filter;
+use Illuminate\Database\Eloquent\Builder;
+
+class {{name}}Repository extends BaseRepository implements {{name}}RepositoryInterface
+{
+   /**
+     * Get the filter manager for this repository.
+     */
+    protected function getFilterManager(): {{name}}Filter
+    {
+         $filterManager = new {{name}}Filter();
+         $filterManager->setQuery($this->getQuery());
+
+         return $filterManager;
+    }
+
+    /**
+     * Specify Model class name
+     */
+    public function model(): string
+    {
+        return {{modelName}}::class;
+    }
+
+    // Add other method implementations as needed
+}
