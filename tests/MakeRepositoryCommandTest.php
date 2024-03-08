@@ -15,11 +15,6 @@ class MakeRepositoryCommandTest extends BaseTest
         parent::setUp();
 
         $this->basePath = config('repository.path', app_path('Repositories'));
-
-        // Ensure the target directory exists
-        if (! File::isDirectory($this->basePath)) {
-            File::makeDirectory($this->basePath, 0755, true);
-        }
     }
 
     protected function tearDown(): void
@@ -41,7 +36,7 @@ class MakeRepositoryCommandTest extends BaseTest
         ];
 
         foreach ($expectedFiles as $file) {
-            $this->assertTrue(File::exists($file), "$file does not exist.");
+            $this->assertFileExists($file);
         }
     }
 }
