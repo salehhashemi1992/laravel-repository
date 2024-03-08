@@ -14,7 +14,12 @@ class MakeRepository extends Command
 
     protected $description = 'Creates a new repository, interface, and filter for the specified model';
 
-    public function handle(Filesystem $filesystem): void
+    public function __construct(private readonly Filesystem $filesystem)
+    {
+        parent::__construct();
+    }
+
+    public function handle(): void
     {
         $name = $this->argument('name');
         $modelName = Str::studly(class_basename($name));
@@ -30,7 +35,7 @@ class MakeRepository extends Command
         ];
 
         foreach ($paths as $filePath => $stubName) {
-            $this->ensureDirectoryExists(dirname($filePath), $filesystem);
+            $this->ensureDirectoryExists(dirname($filePath));
 
             $replacements = [
                 '{{namespace}}' => str_replace('/', '\\', $this->pathToNamespace(dirname($filePath))),
@@ -40,16 +45,16 @@ class MakeRepository extends Command
             ];
 
             $content = $this->getStubContent($stubName, $replacements);
-            $filesystem->put($filePath, $content);
+            $this->filesystem->put($filePath, $content);
 
             $this->info("Created: {$filePath}");
         }
     }
 
-    protected function ensureDirectoryExists(string $path, Filesystem $filesystem): void
+    protected function ensureDirectoryExists(string $path): void
     {
-        if (! $filesystem->isDirectory($path)) {
-            $filesystem->makeDirectory($path, 0755, true);
+        if (! $this->filesystem->isDirectory($path)) {
+            $this->filesystem->makeDirectory($path, 0755, true);
         }
     }
 

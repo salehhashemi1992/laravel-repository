@@ -4,13 +4,15 @@ declare(strict_types=1);
 namespace {{namespace}};
 
 use {{namespace}}\Contracts\{{name}}RepositoryInterface;
-use Salehhashemi\Repository\Eloquent\BaseRepository;
 use {{modelNamespace}}\{{modelName}};
 use {{namespace}}\Filters\{{name}}Filter;
-use Illuminate\Database\Eloquent\Builder;
+use Salehhashemi\Repository\BaseEloquentRepository;
+use Salehhashemi\Repository\Traits\Searchable;
 
-class {{name}}Repository extends BaseRepository implements {{name}}RepositoryInterface
+class {{name}}Repository extends BaseEloquentRepository implements {{name}}RepositoryInterface
 {
+    use Searchable;
+
    /**
      * Get the filter manager for this repository.
      */
@@ -23,12 +25,10 @@ class {{name}}Repository extends BaseRepository implements {{name}}RepositoryInt
     }
 
     /**
-     * Specify Model class name
+     * {@inheritdoc}
      */
-    public function model(): string
+    protected function getModelClass(): string
     {
         return {{modelName}}::class;
     }
-
-    // Add other method implementations as needed
 }

@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 interface RepositoryInterface
 {
     /**
-     * It applies the conditions, criteria, relations, and orders by to the query,
+     * It applies the conditions, criteria, relations, and order-by clauses to the query,
      * then gets the first result and resets the query
      */
     public function findOne(int|string|null $primaryKey = null): ?Model;
