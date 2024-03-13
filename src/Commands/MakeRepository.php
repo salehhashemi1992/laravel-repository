@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class MakeRepository extends Command
 {
-    protected $signature = 'make:repository {name : The name of the model}';
+    protected $signature = 'make:repository {name : The (fully qualified) name of the model}';
 
     protected $description = 'Creates a new repository, interface, and filter for the specified model';
 
@@ -22,8 +22,14 @@ class MakeRepository extends Command
     public function handle(): void
     {
         $name = $this->argument('name');
-        $modelName = Str::studly(class_basename($name));
-        $modelNamespace = 'App\\Models';
+
+        if (Str::contains($name, '\\')) {
+            $modelName = Str::afterLast($name, '\\');
+            $modelNamespace = Str::beforeLast($name, '\\');
+        } else {
+            $modelName = Str::studly(class_basename($name));
+            $modelNamespace = app()->getNamespace().'Models';
+        }
 
         // Configuration-based paths
         $repositoryPath = config('repository.path', app_path('Repositories'));
@@ -60,9 +66,10 @@ class MakeRepository extends Command
 
     protected function pathToNamespace(string $path): string
     {
-        $appNamespace = 'App';
+        $appNamespace = app()->getNamespace();
         $relativePath = str_replace(app_path(), '', $path);
         $namespace = str_replace(['/', '\\'], '\\', $relativePath);
+        $namespace = ltrim($namespace, '\\');
 
         return trim($appNamespace.$namespace, '\\');
     }

@@ -39,4 +39,26 @@ class MakeRepositoryCommandTest extends BaseTest
             $this->assertFileExists($file);
         }
     }
+
+    public function testRepositoryStubGenerationWithFQCN(): void
+    {
+        $fqcn = 'App\Models\Special\\'.$this->model;
+
+        $this->artisan('make:repository', ['name' => $fqcn]);
+
+        $expectedNamespace = 'namespace App\Repositories';
+
+        $expectedFiles = [
+            "{$this->basePath}/{$this->model}Repository.php",
+            "{$this->basePath}/Contracts/{$this->model}RepositoryInterface.php",
+            "{$this->basePath}/Filters/{$this->model}Filter.php",
+        ];
+
+        foreach ($expectedFiles as $file) {
+            $this->assertFileExists($file);
+
+            $content = file_get_contents($file);
+            $this->assertStringContainsString($expectedNamespace, $content);
+        }
+    }
 }
