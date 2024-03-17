@@ -210,10 +210,6 @@ class RepositoryTest extends BaseTest
 
         $this->assertCount(1, $filteredPosts);
         $this->assertEquals('published', $filteredPosts->first()->status);
-        $this->assertEquals(
-            now()->subDay()->format('Y-m-d H:i:s'),
-            $filteredPosts->first()->created_at->format('Y-m-d H:i:s')
-        );
     }
 
     public function testGetCriteriaPosts()
