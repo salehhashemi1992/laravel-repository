@@ -2,6 +2,10 @@
 
 All notable changes will be documented in this file.
 
+## v0.5.0
+- implement make repository command by @salehhashemi1992 in #17
+- update readme file by @salehhashemi1992 in #18
+
 ## v0.4.0
 - fix preparePageSize method by @salehhashemi1992 in #15
 - Implement tests for the whole flow by @salehhashemi1992 in #16
