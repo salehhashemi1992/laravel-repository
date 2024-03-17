@@ -11,22 +11,45 @@
 
 </div>
 
-This Laravel package abstracts the database layer using repository pattern with enhanced capabilities for filtering and searching. It simplifies the common tasks of data manipulation, along with advanced features for applying custom filters and search criteria.
+This Laravel package simplifies and streamlines data access by implementing the repository pattern.
+It provides a powerful abstraction layer for your database interactions,
+enhanced with flexible filtering, searching, and criteria-based querying.
 
 ![Header Image](./assets/header.png)
 
 ## Features
-* Repository Abstraction
-* Dynamic Filtering
-* Criteria-Based Filtering
-* Search Functionality
-* Modular Repository Interface
-* Ease of Integration
+* **Repository Abstraction:** Decouples data access logic from application code.
+* **Dynamic Filtering:** Apply filters to refine database queries.
+* **Criteria-Based Filtering:** Define reusable criteria for common query constraints.
+* **Search Functionality:** Implement custom search logic based on user input.
+* **Modular Repository Interface:** Enforces consistency and maintainability.
+* **Ease of Integration:** Seamlessly integrates with Laravel applications.
+* **Development Tools:** Automate repository, interface, and filter creation with the `make:repository` command.
 
 ## Installation
 To install the package, you can run the following command:
 ```bash
 composer require salehhashemi/laravel-repository
+```
+
+## Development Tools
+
+The package includes a helpful command to speed up your development workflow:
+
+* **`make:repository`**  This command automates the creation of the following components for a specified model:
+
+   * Repository Class
+   * Repository Interface
+   * Filter Class
+
+**Usage Example:**
+
+```bash
+php artisan make:repository User 
+```
+or
+```bash
+php artisan make:repository App\Models\User 
 ```
 
 ## Example Usage
