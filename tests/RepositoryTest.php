@@ -212,6 +212,35 @@ class RepositoryTest extends BaseTest
         $this->assertEquals('published', $filteredPosts->first()->status);
     }
 
+    public function testFilterResultsByDate()
+    {
+        Post::factory()->create([
+            'title' => 'Post 03',
+            'created_at' => now()->subDay(),
+        ]);
+
+        Post::factory()->create([
+            'title' => 'Post 02',
+            'created_at' => now()->subDays(2),
+        ]);
+
+        Post::factory()->create([
+            'title' => 'Post 01',
+            'created_at' => now()->subDays(3),
+        ]);
+
+        /** @var \Salehhashemi\Repository\Tests\TestSupport\Repositories\PostRepositoryInterface $postRepo */
+        $postRepo = $this->app->make(PostRepositoryInterface::class);
+
+        /** @var \Illuminate\Database\Eloquent\Collection $filteredPosts */
+        $filteredPosts = $postRepo->search([
+            'created_from' => now()->subDays(3)->toDateString(),
+            'created_to' => now()->subDays(2)->toDateString(),
+        ]);
+
+        $this->assertSame(['Post 01', 'Post 02'], $filteredPosts->pluck('title')->toArray());
+    }
+
     public function testGetCriteriaPosts()
     {
         Post::factory()->create(['is_featured' => 1]);
