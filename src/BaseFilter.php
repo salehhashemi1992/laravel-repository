@@ -85,6 +85,24 @@ abstract class BaseFilter
         return $this;
     }
 
+    protected function dateFrom(string $field, string $date): static
+    {
+        if ($date) {
+            $this->getQuery()->where($field, '>=', $date.' 00:00:00');
+        }
+
+        return $this;
+    }
+
+    protected function dateTo(string $field, string $date): static
+    {
+        if ($date) {
+            $this->getQuery()->where($field, '<=', $date.' 23:59:59');
+        }
+
+        return $this;
+    }
+
     public function setQuery(QueryBuilder $builder): void
     {
         $this->builder = $builder;

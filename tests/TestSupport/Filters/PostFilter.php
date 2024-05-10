@@ -12,9 +12,11 @@ class PostFilter extends BaseFilter
     {
         $this
             ->whereLike('title', $queryParams['title'] ?? '', self::WILD_BOTH)
-            ->whereValue('status', $queryParams['status'] ?? '')
-            ->compare('created_at', '>=', $queryParams['created_from'] ?? '')
-            ->compare('created_at', '<=', $queryParams['created_to'] ?? '');
+            ->whereValue('status', $queryParams['status'] ?? '');
+
+        $this
+            ->dateFrom('created_at', $queryParams['created_from'] ?? '')
+            ->dateTo('created_at', $queryParams['created_to'] ?? '');
 
         if (! empty($queryParams['category_id'])) {
             $this->getQuery()->whereHas('categories', function ($query) use ($queryParams) {
