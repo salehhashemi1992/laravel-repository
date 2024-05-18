@@ -2,6 +2,10 @@
 
 All notable changes will be documented in this file.
 
+## v0.5.2
+- Add Support for Date Range Filtering by @imahmood in #19
+- Laravel 11.x Support by @imahmood in #20
+
 ## v0.5.0
 - implement make repository command by @salehhashemi1992 in #17
 - update readme file by @salehhashemi1992 in #18
