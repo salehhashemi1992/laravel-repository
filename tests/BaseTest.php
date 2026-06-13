@@ -2,6 +2,7 @@
 
 namespace Salehhashemi\Repository\Tests;
 
+use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase;
 use Salehhashemi\Repository\RepositoryServiceProvider;
 
@@ -18,7 +19,7 @@ abstract class BaseTest extends TestCase
     /**
      * Add the package provider.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      */
     protected function getPackageProviders($app): array
     {
@@ -28,7 +29,7 @@ abstract class BaseTest extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      */
     protected function getEnvironmentSetUp($app): void
     {

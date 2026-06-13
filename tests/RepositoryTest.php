@@ -3,6 +3,7 @@
 namespace Salehhashemi\Repository\Tests;
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class RepositoryTest extends BaseTest
         );
     }
 
-    public function testFindOneReturnsModelInstance()
+    public function test_find_one_returns_model_instance()
     {
         $post = Post::factory()->create();
 
@@ -37,9 +38,9 @@ class RepositoryTest extends BaseTest
         $this->assertEquals($post->id, $foundPost->id);
     }
 
-    public function testFindOneReturnsNullIfNotFound()
+    public function test_find_one_returns_null_if_not_found()
     {
-        $postRepository = new PostRepository();
+        $postRepository = new PostRepository;
         $nonExistentId = 99999; // This ID does not exist in the database
 
         $foundPost = $postRepository->findOne($nonExistentId);
@@ -47,7 +48,7 @@ class RepositoryTest extends BaseTest
         $this->assertNull($foundPost);
     }
 
-    public function testFindOneOrFailReturnsModelInstance()
+    public function test_find_one_or_fail_returns_model_instance()
     {
         $post = Post::factory()->create();
 
@@ -59,17 +60,17 @@ class RepositoryTest extends BaseTest
         $this->assertEquals($post->id, $foundPost->id);
     }
 
-    public function testFindOneOrFailThrowsExceptionIfNotFound()
+    public function test_find_one_or_fail_throws_exception_if_not_found()
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $postRepository = new PostRepository();
+        $postRepository = new PostRepository;
         $nonExistentId = 99999; // This ID does not exist in the database
 
         $postRepository->findOneOrFail($nonExistentId);
     }
 
-    public function testFindAllRetrievesAllRecords()
+    public function test_find_all_retrieves_all_records()
     {
         Post::factory()->count(5)->create();
 
@@ -81,7 +82,7 @@ class RepositoryTest extends BaseTest
         $this->assertInstanceOf(EloquentCollection::class, $posts);
     }
 
-    public function testFindAllWithLimitOption()
+    public function test_find_all_with_limit_option()
     {
         Post::factory()->count(10)->create();
 
@@ -92,7 +93,7 @@ class RepositoryTest extends BaseTest
         $this->assertCount(5, $posts);
     }
 
-    public function testFindAllWithOffsetAndLimitOptions()
+    public function test_find_all_with_offset_and_limit_options()
     {
         Post::factory()->count(10)->create();
 
@@ -107,7 +108,7 @@ class RepositoryTest extends BaseTest
         $this->assertEquals($expectedId, $firstPostAfterOffset->id);
     }
 
-    public function testFindListRetrievesDefaultKeyValuePairs()
+    public function test_find_list_retrieves_default_key_value_pairs()
     {
         Post::factory()->count(3)->create();
 
@@ -126,7 +127,7 @@ class RepositoryTest extends BaseTest
         $this->assertSame($expected, $list->toArray());
     }
 
-    public function testFindListWithCustomKeyValuePairs()
+    public function test_find_list_with_custom_key_value_pairs()
     {
         Post::factory()->count(3)->create();
 
@@ -141,7 +142,7 @@ class RepositoryTest extends BaseTest
         }
     }
 
-    public function testPaginateWithSpecifiedPerPage()
+    public function test_paginate_with_specified_per_page()
     {
         Post::factory()->count(15)->create();
 
@@ -156,7 +157,7 @@ class RepositoryTest extends BaseTest
         $this->assertEquals(3, $paginatedResults->lastPage());
     }
 
-    public function testPaginateWithDefaultPerPage()
+    public function test_paginate_with_default_per_page()
     {
         Post::factory()->count(10)->create();
 
@@ -169,7 +170,7 @@ class RepositoryTest extends BaseTest
         $this->assertCount(min(10, $defaultPerPage), $paginatedResults->items());
     }
 
-    public function testInvalidPageSizeThrowsException()
+    public function test_invalid_page_size_throws_exception()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -178,7 +179,7 @@ class RepositoryTest extends BaseTest
         $postRepo->paginate(0);
     }
 
-    public function testGetFilteredPosts()
+    public function test_get_filtered_posts()
     {
         $category = Category::factory()->create();
 
@@ -205,14 +206,14 @@ class RepositoryTest extends BaseTest
 
         $postRepo->orderBy('created_at');
 
-        /** @var \Illuminate\Database\Eloquent\Collection $filteredPosts */
+        /** @var Collection $filteredPosts */
         $filteredPosts = $postRepo->search($filterOptions);
 
         $this->assertCount(1, $filteredPosts);
         $this->assertEquals('published', $filteredPosts->first()->status);
     }
 
-    public function testFilterResultsByDate()
+    public function test_filter_results_by_date()
     {
         Post::factory()->create([
             'title' => 'Post 03',
@@ -229,10 +230,10 @@ class RepositoryTest extends BaseTest
             'created_at' => now()->subDays(3),
         ]);
 
-        /** @var \Salehhashemi\Repository\Tests\TestSupport\Repositories\PostRepositoryInterface $postRepo */
+        /** @var PostRepositoryInterface $postRepo */
         $postRepo = $this->app->make(PostRepositoryInterface::class);
 
-        /** @var \Illuminate\Database\Eloquent\Collection $filteredPosts */
+        /** @var Collection $filteredPosts */
         $filteredPosts = $postRepo->search([
             'created_from' => now()->subDays(3)->toDateString(),
             'created_to' => now()->subDays(2)->toDateString(),
@@ -241,21 +242,21 @@ class RepositoryTest extends BaseTest
         $this->assertSame(['Post 01', 'Post 02'], $filteredPosts->pluck('title')->toArray());
     }
 
-    public function testGetCriteriaPosts()
+    public function test_get_criteria_posts()
     {
         Post::factory()->create(['is_featured' => 1]);
         Post::factory()->create();
 
         $postRepo = $this->app->make(PostRepositoryInterface::class);
 
-        $postRepo->addCriteria(new FeaturedPostCriteria());
+        $postRepo->addCriteria(new FeaturedPostCriteria);
 
         $filteredPosts = $postRepo->findAll();
 
         $this->assertCount(1, $filteredPosts);
     }
 
-    public function testFindAllFeatured()
+    public function test_find_all_featured()
     {
         Post::factory()->count(3)->create(['is_featured' => 1]);
         Post::factory()->count(2)->create(['is_featured' => 0]);
@@ -269,7 +270,7 @@ class RepositoryTest extends BaseTest
         }
     }
 
-    public function testSearchVisible()
+    public function test_search_visible()
     {
         Post::factory()->count(6)->create(['status' => 'draft']);
         Post::factory()->count(4)->create(['status' => 'published']);
@@ -282,7 +283,7 @@ class RepositoryTest extends BaseTest
         $this->assertCount(5, $paginatedPosts->items());
     }
 
-    public function testFindOnePublishedOrFail()
+    public function test_find_one_published_or_fail()
     {
         $publishedPost = Post::factory()->create(['is_published' => 1]);
 
@@ -296,7 +297,7 @@ class RepositoryTest extends BaseTest
         $postRepo->findOnePublishedOrFail(999); // Non-existent ID
     }
 
-    public function testWithComments()
+    public function test_with_comments()
     {
         $post = Post::factory()->hasComments(3)->create();
 
@@ -307,7 +308,7 @@ class RepositoryTest extends BaseTest
         $this->assertCount(3, $foundPost->comments);
     }
 
-    public function testWithCategories()
+    public function test_with_categories()
     {
         // Create posts and associate them with categories
         $post = Post::factory()->hasCategories(3)->create();
@@ -325,7 +326,7 @@ class RepositoryTest extends BaseTest
         }
     }
 
-    public function testLockForUpdateUsage()
+    public function test_lock_for_update_usage()
     {
         $post = Post::factory()->create();
 
@@ -344,7 +345,7 @@ class RepositoryTest extends BaseTest
         $this->assertEquals('Updated Title', $updatedPost->title);
     }
 
-    public function testSharedLockUsage()
+    public function test_shared_lock_usage()
     {
         $post = Post::factory()->create();
 

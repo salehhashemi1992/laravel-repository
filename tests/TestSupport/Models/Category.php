@@ -2,6 +2,7 @@
 
 namespace Salehhashemi\Repository\Tests\TestSupport\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -10,7 +11,7 @@ use Salehhashemi\Repository\Tests\TestSupport\database\factories\CategoryFactory
 /**
  * @property int $id
  * @property string $name
- * @property \Illuminate\Database\Eloquent\Collection|\Salehhashemi\Repository\Tests\TestSupport\Models\Post[] $posts
+ * @property Collection|Post[] $posts
  *
  * @method static CategoryFactory factory($count = null, $state = [])
  */

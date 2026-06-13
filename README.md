@@ -32,6 +32,10 @@ To install the package, you can run the following command:
 composer require salehhashemi/laravel-repository
 ```
 
+## Compatibility
+- Laravel `12.x`, `13.x`
+- PHP `8.2+`
+
 ## Development Tools
 
 The package includes a helpful command to speed up your development workflow:

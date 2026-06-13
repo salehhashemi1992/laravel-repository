@@ -13,7 +13,7 @@ use Salehhashemi\Repository\Tests\TestSupport\database\factories\CommentFactory;
  * @property int $id
  * @property string $content
  * @property int $post_id
- * @property \Salehhashemi\Repository\Tests\TestSupport\Models\Post $post
+ * @property Post $post
  *
  * @method static CommentFactory factory($count = null, $state = [])
  */
