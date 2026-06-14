@@ -3,10 +3,11 @@
 namespace Salehhashemi\Repository\Traits;
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Salehhashemi\Repository\BaseEloquentRepository;
 use Salehhashemi\Repository\BaseFilter;
 
 /**
- * @mixin \Salehhashemi\Repository\BaseEloquentRepository
+ * @mixin BaseEloquentRepository
  */
 trait Searchable
 {

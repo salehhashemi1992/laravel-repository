@@ -70,7 +70,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
         $result = $this->findOne();
 
         if ($result === null) {
-            throw (new ModelNotFoundException())->setModel(
+            throw (new ModelNotFoundException)->setModel(
                 $this->model::class,
                 $primaryKey ?? ''
             );
@@ -147,7 +147,7 @@ abstract class BaseEloquentRepository implements RepositoryInterface
     /**
      * Prepare the page size for pagination.
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function preparePageSize(?int $perPage = null): int
     {

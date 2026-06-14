@@ -2,6 +2,12 @@
 
 All notable changes will be documented in this file.
 
+## v0.6.0
+- Drop Laravel 9.x, 10.x, and 11.x support.
+- Add Laravel 12.x and 13.x support.
+- Require PHP 8.2+.
+- Update CI matrix to test Laravel 12.x and 13.x.
+
 ## v0.5.2
 - Add Support for Date Range Filtering by @imahmood in #19
 - Laravel 11.x Support by @imahmood in #20

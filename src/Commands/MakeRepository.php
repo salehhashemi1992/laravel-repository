@@ -22,6 +22,7 @@ class MakeRepository extends Command
     public function handle(): void
     {
         $name = $this->argument('name');
+        assert(is_string($name));
 
         if (Str::contains($name, '\\')) {
             $modelName = Str::afterLast($name, '\\');

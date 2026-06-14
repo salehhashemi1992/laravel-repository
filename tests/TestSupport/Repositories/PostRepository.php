@@ -21,7 +21,7 @@ class PostRepository extends BaseEloquentRepository implements PostRepositoryInt
 
     protected function getFilterManager(): PostFilter
     {
-        $filterManager = new PostFilter();
+        $filterManager = new PostFilter;
         $filterManager->setQuery($this->getQuery());
 
         return $filterManager;
@@ -29,7 +29,7 @@ class PostRepository extends BaseEloquentRepository implements PostRepositoryInt
 
     public function findAllFeatured(): EloquentCollection
     {
-        $this->addCriteria(new FeaturedPostCriteria());
+        $this->addCriteria(new FeaturedPostCriteria);
 
         return $this->findAll(['limit' => 20]);
     }

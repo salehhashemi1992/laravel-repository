@@ -25,7 +25,7 @@ class MakeRepositoryCommandTest extends BaseTest
         parent::tearDown();
     }
 
-    public function testRepositoryStubGeneration(): void
+    public function test_repository_stub_generation(): void
     {
         $this->artisan('make:repository', ['name' => $this->model]);
 
@@ -40,7 +40,7 @@ class MakeRepositoryCommandTest extends BaseTest
         }
     }
 
-    public function testRepositoryStubGenerationWithFQCN(): void
+    public function test_repository_stub_generation_with_fqcn(): void
     {
         $fqcn = 'App\Models\Special\\'.$this->model;
 

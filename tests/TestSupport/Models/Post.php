@@ -2,6 +2,7 @@
 
 namespace Salehhashemi\Repository\Tests\TestSupport\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,8 +16,8 @@ use Salehhashemi\Repository\Tests\TestSupport\database\factories\PostFactory;
  * @property string $status
  * @property bool $is_published
  * @property bool $is_featured
- * @property \Illuminate\Database\Eloquent\Collection|\Salehhashemi\Repository\Tests\TestSupport\Models\Comment[] $comments
- * @property \Illuminate\Database\Eloquent\Collection| \Salehhashemi\Repository\Tests\TestSupport\Models\Category[] $categories
+ * @property Collection|Comment[] $comments
+ * @property Collection| Category[] $categories
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()

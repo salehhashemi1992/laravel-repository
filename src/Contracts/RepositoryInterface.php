@@ -5,6 +5,7 @@ namespace Salehhashemi\Repository\Contracts;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 interface RepositoryInterface
@@ -18,7 +19,7 @@ interface RepositoryInterface
     /**
      * If the result of the `findOne` function is null, throw a `ModelNotFoundException`
      *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws ModelNotFoundException
      */
     public function findOneOrFail(int|string|null $primaryKey = null): Model;
 
@@ -34,7 +35,7 @@ interface RepositoryInterface
      *
      * @param  string|null  $key  The key to use for the list.
      * @param  string|null  $value  The field to use as the value of the select list.
-     * @return \Illuminate\Support\Collection A collection of key value pairs.
+     * @return Collection A collection of key value pairs.
      */
     public function findList(?string $key = null, ?string $value = null): Collection;
 
